@@ -16,4 +16,7 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+  background: #252525;
+}
 </style>

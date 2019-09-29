@@ -1,14 +1,42 @@
 <template>
   <div class="feed-item" v-bind:class="finalEntryType">
     <div class="header">
-      <div class="source">{{feedItemData.Source}}</div>
-      <div class="user">{{feedItemData.UserName}}</div>
-      <div class="type">{{GetEntryTypeName(feedItemData.EntryType)}}</div>
-      <div class="eventID">{{feedItemData.EventID}}</div>
+      <div class="source">
+        Source:
+        <br />
+        {{feedItemData.Source}}
+      </div>
+      <div class="machine-name">
+        Machine Name:
+        <br />
+        {{feedItemData.MachineName}}
+      </div>
+      <div class="user">
+        User:
+        <br />
+        {{feedItemData.UserName}}
+      </div>
+      <div class="type">
+        Type:
+        <br />
+        {{GetEntryTypeName(feedItemData.EntryType)}}
+      </div>
+      <div class="event-id">
+        Event ID:
+        <br />
+        {{feedItemData.EventID}}
+      </div>
     </div>
     <div class="body">
       <div class="date">{{GetLegibleTime(feedItemData.TimeGenerated)}}</div>
       <div class="message">{{feedItemData.Message}}</div>
+      <div class="expanded" v-if="expanded">
+        <button v-on:click="expanded=false" v-bind:class="finalEntryType">-Less Information-</button>
+        <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+      </div>
+      <div class="collapsed" v-else>
+        <button v-on:click="expanded=true" v-bind:class="finalEntryType">-More Information-</button>
+      </div>
     </div>
   </div>
 </template>
@@ -19,6 +47,7 @@ export default {
   props: ['feedItemData'],
   data: () => ({
     finalEntryType: '',
+    expanded: false,
   }),
   methods: {
     GetEntryTypeName(entryType) {
@@ -56,11 +85,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$errorcolor: #ff6666;
-$warningcolor: #ffa600;
-$informationColor: #6e9cff;
-$successAuditcolor: #6fff6f;
-$failureauditcolor: #ff6666;
+$errorcolor: #882424;
+$warningcolor: #8a8824;
+$informationColor: #004e97;
+$successAuditcolor: #328332;
+$failureauditcolor: $errorcolor;
+$fontcolor: #ffffff;
 
 .error {
   .header {
@@ -111,15 +141,49 @@ $failureauditcolor: #ff6666;
   margin: 1em;
   .header {
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    color: black;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 15px;
+    grid-row-gap: 30px;
+    color: $fontcolor;
+    text-shadow: 1px 1px #000000;
     padding: 0.25em;
   }
   .body {
     padding: 0.25em;
+    color: $fontcolor;
+    text-shadow: 1px 1px #000000;
     .date {
       margin-bottom: 0.75em;
     }
+    .message {
+      margin-bottom: 0.75em;
+    }
   }
+  .error {
+    background: $errorcolor;
+  }
+  .warning {
+    background: $warningcolor;
+  }
+  .information {
+    background: $informationColor;
+  }
+  .successaudit {
+    background: $successAuditcolor;
+  }
+  .failureaudit {
+    background: $failureauditcolor;
+  }
+}
+
+button {
+  border: none;
+  color: white;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-shadow: 1px 1px #000000;
+  margin-bottom: 0.5em;
 }
 </style>
