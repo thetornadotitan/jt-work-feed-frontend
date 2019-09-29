@@ -40,5 +40,7 @@ export default {
 <style lang="scss" scoped>
 .feed {
   text-align: center;
+  color: white;
+  text-shadow: 1px 1px black;
 }
 </style>
